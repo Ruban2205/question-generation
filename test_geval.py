@@ -151,6 +151,6 @@ df_results = pd.DataFrame(results)
 print(df_results)
 
 # Saving results in a CSV file
-output_file_path = 'evaluation_results.csv'
+output_file_path = 'results/evaluation_results.csv'
 df_results.to_csv(output_file_path, index=False)
 print(f"Results saved to {output_file_path}")

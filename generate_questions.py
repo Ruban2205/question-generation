@@ -1,3 +1,4 @@
+# Few-shot + Chain-of-Thought Prompting.
 import openai
 import json
 import os
@@ -6,7 +7,7 @@ import os
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
 # Load workout data
-with open("workout_data.json", "r") as file:
+with open("data/workout_data.json", "r") as file:
     workout_data = json.load(file)
 
 def create_prompt(workout):
@@ -32,7 +33,7 @@ def create_prompt(workout):
     """
     return prompt.strip()
 
-def generate_questions(prompt, model="gpt-3.5-turbo", max_tokens=200):
+def generate_questions(prompt, model="gpt-3.5-turbo", max_tokens=300):
     response = openai.ChatCompletion.create(
         model=model,
         messages=[
@@ -52,3 +53,16 @@ for workout in workout_data:
     print("Generated Questions:")
     print(questions)
     print("-" * 80)
+
+# Open a file to write the questions
+output_file = "outputqns/generated_questions.txt"
+with open(output_file, "w") as file:
+    for workout in workout_data:
+        prompt = create_prompt(workout)
+        questions = generate_questions(prompt)
+        file.write(f"Workout Title: {workout.get('title', 'N/A')}\n")
+        file.write("Generated Questions:\n")
+        file.write(questions + "\n")
+        file.write("-" * 80 + "\n")
+
+print(f"Questions have been exported to {output_file}.")

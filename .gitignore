@@ -1,0 +1,6 @@
+env
+__pycache__
+.deepeval
+.deepeval_telemtry.txt
+temp_test_run_data.json
+.pytest_cache
